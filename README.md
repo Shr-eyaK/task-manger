@@ -1,8 +1,6 @@
 # Task Manager
 
-A personal project designed to help organize tasks more efficiently.  
-The goal of this application is to create a clean, simple, and effective way to manage daily tasks, with features that go beyond a basic to‑do list.  
-I’m building this project to practice Java, improve my software design skills, and showcase my work on my résumé.
+A personal project designed to help organize tasks more efficiently. The goal of this application is to create a clean, simple, and effective way to manage daily tasks, with features that go beyond a basic to‑do list.  
 
 ---
 
@@ -29,7 +27,7 @@ I’m building this project to practice Java, improve my software design skills,
 
 ---
 
-## How to Run
+## Installation
 
 *(This section will be updated once the app is runnable.)*
 
@@ -50,9 +48,4 @@ I’m building this project to practice Java, improve my software design skills,
 - [ ] Improve UI design  
 - [ ] Add advanced features (search, reminders, etc.)
 
----
 
-## Author
-
-Shreya K  
-A student building projects to learn, grow, and demonstrate development skills.
