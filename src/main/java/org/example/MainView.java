@@ -45,6 +45,16 @@ public class MainView {
         hbox.getChildren().addAll(title2,addTaskButton,spacer);
         root.setTop(hbox);
 
+        //Centre
+        VBox centrebox = new VBox();
+        centrebox.setSpacing(10);
+        centrebox.setPadding(new Insets(20));
+        Label defaultTitle = new Label("No Tasks Yet");
+
+        centrebox.getChildren().addAll(defaultTitle);
+        root.setCenter(centrebox);
+
+
         return root;
 
     }
