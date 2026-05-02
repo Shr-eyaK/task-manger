@@ -17,7 +17,7 @@ A personal project designed to help organize tasks more efficiently. The goal of
 
 ---
 
-## Tech Stack
+## Technologies Used
 
 - **Java 17**  
 - **IntelliJ IDEA**  
