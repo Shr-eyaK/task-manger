@@ -2,13 +2,10 @@ package org.example;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
@@ -124,8 +121,26 @@ public class MainView {
             }
 
             // Add the new task to the main area
-            Label newTask = new Label(taskName + " (" + category + ")");
-            centrebox.getChildren().add(newTask);
+            HBox taskRow = new HBox();
+            taskRow.setSpacing(10);
+            taskRow.setPadding(new Insets(5));
+            taskRow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 5;");
+
+            CheckBox check = new CheckBox();
+            Label taskLabel = new Label(taskName + " (" + category + ")");
+            check.setOnAction(ev -> {
+                if (check.isSelected()) {
+                    taskLabel.setStyle("-fx-text-fill: gray; -fx-strikethrough: true;");
+                } else {
+                    taskLabel.setStyle("-fx-text-fill: black; -fx-strikethrough: false;");
+                }
+            });
+
+            Button deleteButton = new Button("X");
+            deleteButton.setOnAction(ev -> centrebox.getChildren().remove(taskRow));
+
+            taskRow.getChildren().addAll(check, taskLabel, deleteButton);
+            centrebox.getChildren().add(taskRow);
 
             popup.close();
         });
