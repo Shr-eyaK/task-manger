@@ -10,9 +10,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
-
 public class MainView {
-
+    private TaskManager taskManager = new TaskManager();
     private VBox centrebox;
     public BorderPane createUI() {
         BorderPane root = new BorderPane();
@@ -53,14 +52,10 @@ public class MainView {
         centrebox = new VBox();
         centrebox.setSpacing(10);
         centrebox.setPadding(new Insets(20));
-        Label defaultTitle = new Label("No Tasks Yet");
 
-        centrebox.getChildren().addAll(defaultTitle);
         root.setCenter(centrebox);
-
-
+        renderTasksForCategory("All Tasks");
         return root;
-
     }
 
     private void openAddTaskPopup() {
@@ -99,48 +94,25 @@ public class MainView {
 
             // Validation
             if (taskName.isEmpty()) {
-                //visual feedback
                 nameField.setStyle("-fx-border-color: red;");
                 return;
-            } else {
-                nameField.setStyle(null);
             }
+            nameField.setStyle(null);
 
             if (category == null) {
                 categoryBox.setStyle("-fx-border-color: red;");
                 return;
-            } else {
-                categoryBox.setStyle(null);
             }
+            categoryBox.setStyle(null);
 
-            // Remove placeholder if it's still there
-            if (centrebox.getChildren().size() == 1 &&
-                    centrebox.getChildren().get(0) instanceof Label &&
-                    ((Label) centrebox.getChildren().get(0)).getText().equals("No Tasks Left")) {
-                centrebox.getChildren().clear();
-            }
+            //Create a Task Object
+            Task task = new Task(taskName, category);
 
-            // Add the new task to the main area
-            HBox taskRow = new HBox();
-            taskRow.setSpacing(10);
-            taskRow.setPadding(new Insets(5));
-            taskRow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 5;");
+            //Add to logic layer
+            taskManager.addTask(task);
 
-            CheckBox check = new CheckBox();
-            Label taskLabel = new Label(taskName + " (" + category + ")");
-            check.setOnAction(ev -> {
-                if (check.isSelected()) {
-                    taskLabel.setStyle("-fx-text-fill: gray; -fx-strikethrough: true;");
-                } else {
-                    taskLabel.setStyle("-fx-text-fill: black; -fx-strikethrough: false;");
-                }
-            });
-
-            Button deleteButton = new Button("X");
-            deleteButton.setOnAction(ev -> centrebox.getChildren().remove(taskRow));
-
-            taskRow.getChildren().addAll(check, taskLabel, deleteButton);
-            centrebox.getChildren().add(taskRow);
+            //Re-render UI
+            renderTasksForCategory("All Tasks");
 
             popup.close();
         });
@@ -148,4 +120,51 @@ public class MainView {
         cancelButton.setOnAction(e -> popup.close());
         popup.show();
     }
+
+    private void renderTasksForCategory(String category){
+        centrebox.getChildren().clear();
+
+        var tasksToShow = taskManager.getAllTasksByCategory(category);
+
+        if(tasksToShow.isEmpty()){
+            centrebox.getChildren().add(new Label("No Tasks Yet"));
+            return;
+        }
+
+        for(Task task : tasksToShow){
+            centrebox.getChildren().add(buildTaskRow(task));
+        }
+    }
+
+    private HBox buildTaskRow(Task task) {
+        HBox taskRow = new HBox();
+        taskRow.setSpacing(10);
+        taskRow.setPadding(new Insets(5));
+        taskRow.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 5;");
+
+        CheckBox checkBox = new CheckBox();
+        checkBox.setSelected(task.isCompleted());
+
+        Label taskLabel = new Label(task.getName() + " (" + task.getCategory() + ")");
+
+        if (task.isCompleted()) {
+            taskLabel.setStyle("-fx-text-fill: gray; -fx-strikethrough: true;");
+        }
+
+        checkBox.setOnAction(e -> {
+            task.setCompleted((checkBox.isSelected()));
+            renderTasksForCategory("All Tasks");
+        });
+
+        Button deleteButton = new Button("X");
+        deleteButton.setOnAction(e->{
+            taskManager.removeTask(task);
+            renderTasksForCategory(("All Tasks"));
+        });
+
+        taskRow.getChildren().addAll(checkBox, taskLabel, deleteButton);
+        return taskRow;
+
+    }
+
 }

@@ -3,10 +3,9 @@ package org.example;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.MainView;
 
 public class Main extends Application {
-
+    private TaskManger taskManger = new TaskManger();
     @Override
     public void start(Stage stage) {
         org.example.MainView view = new MainView();

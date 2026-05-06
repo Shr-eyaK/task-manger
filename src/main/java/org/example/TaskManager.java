@@ -1,24 +1,24 @@
 package org.example;
-import java.sql.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskManger {
+public class TaskManager {
     private final List<Task> tasks  = new ArrayList<>();
 
     public void addTask(Task task){
-        task.add(task);
+        tasks.add(task);
     }
 
     public void removeTask(Task task){
-        task.remove(task);
+        tasks.remove(task);
     }
 
     public List<Task> getAllTasks() {
         return new ArrayList<>(tasks);
     }
 
-    public List<Task> getAllTask(){
+    public List<Task> getAllTasksByCategory(String category){
         if(category.equals("All Tasks")){
             return getAllTasks();
         }
