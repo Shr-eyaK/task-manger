@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private TaskManger taskManger = new TaskManger();
     @Override
     public void start(Stage stage) {
         org.example.MainView view = new MainView();
