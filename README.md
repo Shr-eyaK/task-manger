@@ -1,51 +1,59 @@
-# Task Manager
+## Task Manager
 
-A personal project designed to help organize tasks more efficiently. The goal of this application is to create a clean, simple, and effective way to manage daily tasks, with features that go beyond a basic to‑do list.  
+A modular JavaFX desktop application for managing daily tasks with clean architecture and persistent storage.
 
----
+## Features
 
-## Features (Planned & In Progress)
+- Add, edit, and delete tasks
+- Mark tasks complete or mark all complete
+- Category filtering (Work, School, Personal, All Tasks)
+- JSON‑based persistent storage
+- Modal popups for task creation and editing
+- Modular, maintainable UI components
 
-- Create new tasks  
-- Edit and delete tasks  
-- Mark tasks as complete  
-- Categorize tasks (school, work, personal, etc.)  
-- Sort and filter tasks  
-- Save tasks between sessions  
-- Clean and simple UI (JavaFX planned)  
-- Future ideas: reminders, deadlines, priorities, search bar  
+## Architecture Overview
+Component‑based, MVC‑inspired structure:
 
----
+### UI
+- MainView — root layout and coordinator
+- SidebarView — categories + action buttons
+- TaskListView — displays tasks
+- AddTaskPopup / EditTaskPopup — modal dialogs
 
-## Technologies Used
+### Logic
+- TaskManager — task operations
+- TaskStorage — JSON persistence
+- Task — data model
 
-- **Java 17**  
-- **IntelliJ IDEA**  
-- **Maven**  
-- **JavaFX** (planned)  
-- **Git & GitHub**  
+This separation keeps logic, UI, and storage clean and scalable.
 
----
+## Project Structure
+src/main/java/org/example/
+├── Main.java
+├── MainView.java
+├── SidebarView.java
+├── TaskListView.java
+├── AddTaskPopup.java
+├── EditTaskPopup.java
+├── Task.java
+├── TaskManager.java
+└── TaskStorage.java
 
-## Installation
+## Tech Stack
+- Java 17
+- JavaFX
+- Maven
+- Gson
 
-*(This section will be updated once the app is runnable.)*
-
-1. Clone the repository  
-2. Open the project in IntelliJ  
-3. Build using Maven  
-4. Run the main class  
-
----
+## Running the App
+- Clone the repository
+- Open in IntelliJ
+- Build with Maven
+- Run Main.java
 
 ## Roadmap
-
-- [ ] Set up basic UI  
-- [ ] Add task creation  
-- [ ] Add task editing  
-- [ ] Add categories  
-- [ ] Add persistent storage  
-- [ ] Improve UI design  
-- [ ] Add advanced features (search, reminders, etc.)
-
-
+- Priorities & due dates
+- Search & sorting
+- CSS styling
+- Dark mode
+- Reminders
