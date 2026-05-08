@@ -31,6 +31,13 @@ public class TaskManager {
         storage.saveTasks(tasks);
     }
 
+    public void markAllComplete() {
+        for (Task task : tasks) {
+            task.setCompleted(true);
+        }
+        storage.saveTasks(tasks);
+    }
+
     public List<Task> getTasksByCategory(String category) {
         if (category.equals("All Tasks")) {
             return tasks;

@@ -50,7 +50,13 @@ public class MainView {
             });
         });
 
-        header.getChildren().addAll(title, spacer, addTaskButton);
+        Button markAllButton = new Button("Mark All Complete");
+        markAllButton.setOnAction(e -> {
+            taskManager.markAllComplete();
+            renderTasks("All Tasks");
+        });
+
+        header.getChildren().addAll(title, spacer, addTaskButton, markAllButton);
         root.setTop(header);
 
         // Centre area
