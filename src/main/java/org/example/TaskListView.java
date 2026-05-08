@@ -12,7 +12,8 @@ public class TaskListView {
     public VBox createTaskList(
             List<Task> tasks,
             Consumer<Task> onToggle,
-            Consumer<Task> onDelete
+            Consumer<Task> onDelete,
+            Consumer<Task> onEdit
     ) {
         VBox box = new VBox(10);
         box.setPadding(new Insets(20));
@@ -26,6 +27,13 @@ public class TaskListView {
             HBox row = new HBox(10);
             row.setPadding(new Insets(5));
             row.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 5;");
+
+            //Double click to edit
+            row.setOnMouseClicked(e ->{
+                if(e.getClickCount()==2){
+                    onEdit.accept(task);
+                }
+            });
 
             CheckBox check = new CheckBox();
             check.setSelected(task.isCompleted());

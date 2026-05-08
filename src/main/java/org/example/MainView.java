@@ -14,6 +14,7 @@ public class MainView {
     private SidebarView sidebarView = new SidebarView();
     private TaskListView taskListView = new TaskListView();
     private AddTaskPopup addTaskPopup = new AddTaskPopup();
+    private EditTaskPopup editTaskPopup = new EditTaskPopup();
 
     private VBox centrebox;
 
@@ -70,6 +71,9 @@ public class MainView {
                 task -> {
                     taskManager.removeTask(task);
                     renderTasks(category);
+                },
+                task -> {
+                    editTaskPopup.show(task, () -> renderTasks(category));
                 }
         );
 
