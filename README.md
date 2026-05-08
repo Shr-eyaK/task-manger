@@ -28,16 +28,18 @@ Component‑based, MVC‑inspired structure:
 This separation keeps logic, UI, and storage clean and scalable.
 
 ## Project Structure
+```text
 src/main/java/org/example/
-├── Main.java
-├── MainView.java
-├── SidebarView.java
-├── TaskListView.java
-├── AddTaskPopup.java
-├── EditTaskPopup.java
-├── Task.java
-├── TaskManager.java
-└── TaskStorage.java
+|-- Main.java
+|-- MainView.java
+|-- SidebarView.java
+|-- TaskListView.java
+|-- AddTaskPopup.java
+|-- EditTaskPopup.java
+|-- Task.java
+|-- TaskManager.java
+`-- TaskStorage.java
+```
 
 ## Tech Stack
 - Java 17
