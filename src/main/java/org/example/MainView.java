@@ -8,8 +8,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 public class MainView {
+
+    private Stage primaryStage;
+
     private TaskManager taskManager = new TaskManager();
     private SidebarView sidebarView = new SidebarView();
     private TaskListView taskListView = new TaskListView();
@@ -18,16 +22,18 @@ public class MainView {
 
     private VBox centrebox;
 
-    public BorderPane createUI() {
+    public BorderPane createUI(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
         BorderPane root = new BorderPane();
 
-      //Sidebar
-        VBox sidebar = sidebarView.createSidebar(category ->{
+        // Sidebar
+        VBox sidebar = sidebarView.createSidebar(category -> {
             renderTasks(category);
         });
         root.setLeft(sidebar);
 
-        //Header
+        // Header
         HBox header = new HBox(10);
         header.setPadding(new Insets(20));
 
@@ -38,20 +44,21 @@ public class MainView {
 
         Button addTaskButton = new Button("+ Add Task");
         addTaskButton.setOnAction(e -> {
-            addTaskPopup.show(task -> {
+            addTaskPopup.show(primaryStage, task -> {
                 taskManager.addTask(task);
+                renderTasks("All Tasks");
             });
         });
 
-        header.getChildren().addAll(title,addTaskButton,spacer);
+        header.getChildren().addAll(title, spacer, addTaskButton);
         root.setTop(header);
 
-        //Centre area
+        // Centre area
         centrebox = new VBox(10);
         centrebox.setPadding(new Insets(20));
         root.setCenter(centrebox);
 
-        //Initial render
+        // Initial render
         renderTasks("All Tasks");
 
         return root;
@@ -60,12 +67,13 @@ public class MainView {
     private void renderTasks(String category) {
         centrebox.getChildren().clear();
 
-        var tasks = taskManager.getAllTasksByCategory(category);
+        var tasks = taskManager.getTasksByCategory(category);
 
         VBox taskList = taskListView.createTaskList(
                 tasks,
                 task -> {
                     task.setCompleted(!task.isCompleted());
+                    taskManager.updateTask(task);
                     renderTasks(category);
                 },
                 task -> {
@@ -73,11 +81,13 @@ public class MainView {
                     renderTasks(category);
                 },
                 task -> {
-                    editTaskPopup.show(task, () -> renderTasks(category));
+                    editTaskPopup.show(primaryStage, task, () -> {
+                        taskManager.updateTask(task);
+                        renderTasks(category);
+                    });
                 }
         );
 
         centrebox.getChildren().add(taskList);
     }
-
 }

@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage stage) {
-        org.example.MainView view = new MainView();
-        Scene scene = new Scene(view.createUI(), 800, 600);
+        MainView view = new MainView();
+        Scene scene = new Scene(view.createUI(stage), 800, 600);
 
         stage.setScene(scene);
         stage.setTitle("Task Manager");

@@ -5,55 +5,48 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.util.function.Consumer;
 
 public class AddTaskPopup {
 
-    public void show(Consumer<Task> onTaskCreated) {
+    public void show(Stage owner, java.util.function.Consumer<Task> onAdd) {
         Stage popup = new Stage();
         popup.setTitle("Add New Task");
+
+        popup.initOwner(owner);
+        popup.initModality(Modality.WINDOW_MODAL);
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
 
         TextField nameField = new TextField();
+        nameField.setPromptText("Task name");
+
         ComboBox<String> categoryBox = new ComboBox<>();
         categoryBox.getItems().addAll("All Tasks", "Work", "School", "Personal");
+        categoryBox.setValue("Work");
 
-        Button save = new Button("Save");
+        Button add = new Button("Save");
         Button cancel = new Button("Cancel");
 
-        save.setOnAction(e -> {
+        add.setOnAction(e -> {
             String name = nameField.getText().trim();
             String category = categoryBox.getValue();
 
-            boolean valid = true;
+            if (name.isEmpty() || category == null) return;
 
-            if (name.isEmpty()) {
-                nameField.setStyle("-fx-border-color: red;");
-                valid = false;
-            } else {
-                nameField.setStyle(null);
-            }
-
-            if (category == null) {
-                categoryBox.setStyle("-fx-border-color: red;");
-                valid = false;
-            } else {
-                categoryBox.setStyle(null);
-            }
-
-            if (!valid) return;
-
-            onTaskCreated.accept(new Task(name, category));
+            Task newTask = new Task(name, category);
+            onAdd.accept(newTask);
             popup.close();
         });
 
+        cancel.setOnAction(e -> popup.close());
+
         layout.getChildren().addAll(
-                new Label("Task Name"), nameField,
-                new Label("Category: "), categoryBox,
-                new HBox(10, save, cancel)
+                new Label("Task Name:"), nameField,
+                new Label("Category:"), categoryBox,
+                new HBox(10, add, cancel)
         );
 
         popup.setScene(new Scene(layout,300,200));

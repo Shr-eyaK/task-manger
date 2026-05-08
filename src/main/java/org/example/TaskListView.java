@@ -28,7 +28,6 @@ public class TaskListView {
             row.setPadding(new Insets(5));
             row.setStyle("-fx-background-color: #f0f0f0; -fx-background-radius: 5;");
 
-            //Double click to edit
             row.setOnMouseClicked(e ->{
                 if(e.getClickCount()==2){
                     onEdit.accept(task);

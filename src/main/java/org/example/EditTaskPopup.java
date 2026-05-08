@@ -12,9 +12,12 @@ import javafx.stage.Stage;
 
 public class EditTaskPopup {
 
-    public void show(Task task, Runnable onSave) {
+    public void show(Stage owner, Task task, Runnable onSave) {
         Stage popup = new Stage();
         popup.setTitle("Edit Task");
+
+        popup.initOwner(owner);
+        popup.initModality(javafx.stage.Modality.WINDOW_MODAL);
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
