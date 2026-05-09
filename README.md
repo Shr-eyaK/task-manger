@@ -1,4 +1,4 @@
-## Task Manager
+## TaskFlow
 
 A modular JavaFX desktop application for managing daily tasks with clean architecture and persistent storage.
 
